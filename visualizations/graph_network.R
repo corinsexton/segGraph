@@ -2,34 +2,36 @@
 
 #https://kateto.net/network-visualization
 
-setwd("~/Documents/UNLV/Year4/nmf3D/network_graph/")
+setwd("~/Documents/UNLV/Year4/segGraph/visualizations/")
 library(igraph)
 library(tidyverse)
 
 
-nodes_all <- read.csv("nodes.csv", header=T, as.is=T)
-links_all <- read.csv("edges.csv", header=T, as.is=T)
+nodes_all <- read.csv("../build_network/nodes_fix.csv", header=T, as.is=T)
+links_all <- read.csv("../build_network/edges_fix.csv", header=T, as.is=T)
 
-# nodes_all <- unique(nodes_all)
+nodes_all <- unique(nodes_all)
 links_all <- unique(links_all)
 
 # nodes_all <- nodes %>% group_by(id) %>% summarise(chrom_list = paste0(chromhmm, collapse = ","))
 
-nodes <- nodes_all[grepl('chr6_h1',nodes_all$id),]
-links <- links_all[grepl('chr6_h1',links_all$from),]
+nodes <- nodes_all[grepl('chr22_h1',nodes_all$id),]
+links <- links_all[grepl('chr22_h1',links_all$from),]
 
 net <- graph_from_data_frame(d=links, vertices=nodes, directed=T) 
 
 # Generate colors based on media type:
 colrs <- c("gray50", "tomato", "gold")
-V(net)$color <- colrs[V(net)$EnhG2 + 1]
+V(net)$color <- colrs[V(net)$label]
 
 
-png("network.png", height = 3000, width = 3000, res = 150)
-plot(net, vertex.size = 1,vertex.label=NA,edge.arrow.size=.2,edge.width=links$score*250)
+png("network.png", height = 9000, width = 9000, res = 150)
+plot(simplify(net), vertex.size = 0.5,vertex.label=NA,edge.arrow.size=0)
 dev.off()
 
-hist(degree(net))
+#,edge.width=links$score*250
+
+hist(degree(simplify(net)))
 
 
 library('visNetwork') 
