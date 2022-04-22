@@ -2,21 +2,21 @@
 
 #https://kateto.net/network-visualization
 
-setwd("~/Documents/UNLV/Year4/segGraph/visualizations/")
+#setwd("segGraph/visualizations/")
 library(igraph)
 library(tidyverse)
 
 
-nodes_all <- read.csv("../build_network/nodes_fix.csv", header=T, as.is=T)
-links_all <- read.csv("../build_network/edges_fix.csv", header=T, as.is=T)
+nodes <- read.csv("../2_build_network/chr22_nodes.csv", header=T, as.is=T)
+links <- read.csv("../2_build_network/chr22_edges.csv", header=T, as.is=T)
 
-nodes_all <- unique(nodes_all)
-links_all <- unique(links_all)
-
-# nodes_all <- nodes %>% group_by(id) %>% summarise(chrom_list = paste0(chromhmm, collapse = ","))
-
-nodes <- nodes_all[grepl('chr22_h1',nodes_all$id),]
-links <- links_all[grepl('chr22_h1',links_all$from),]
+#nodes_all <- unique(nodes_all)
+#links_all <- unique(links_all)
+#
+## nodes_all <- nodes %>% group_by(id) %>% summarise(chrom_list = paste0(chromhmm, collapse = ","))
+#
+#nodes <- nodes_all[grepl('chr22_h1',nodes_all$id),]
+#links <- links_all[grepl('chr22_h1',links_all$from),]
 
 net <- graph_from_data_frame(d=links, vertices=nodes, directed=T) 
 
@@ -31,7 +31,9 @@ dev.off()
 
 #,edge.width=links$score*250
 
+png("degree.png",height = 1200, width = 2000, res = 200)
 hist(degree(simplify(net)))
+dev.off()
 
 
 library('visNetwork') 
