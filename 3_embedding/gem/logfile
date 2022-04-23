@@ -1,0 +1,53 @@
+(gem) csexton@cherry-creek$ time ./run_gem.py
+Num nodes: 4192, num edges: 16832
+<gem.embedding.gf.GraphFactorization object at 0x7f6263b41080>
+    Iter id: 0
+rm: cannot remove ‘gem/intermediate/chr22_2_gf.emb’: No such file or directory
+graph_factor_sgd:
+    Training time: 0.059352
+    MAP: 0.005909180794883113      precision curve: [0.0, 0.0, 0.0, 0.0, 0.0]
+
+
+
+----------------------------------------------------------------------------------------------------
+Num nodes: 4192, num edges: 16832
+<gem.embedding.hope.HOPE object at 0x7f6211939eb8>
+SVD error (low rank): 0.020651
+hope_gsvd:
+    Training time: 5.008196
+    MAP: 0.013551725281510092      precision curve: [0.0, 0.0, 0.0, 0.0, 0.0]
+
+
+
+----------------------------------------------------------------------------------------------------
+Num nodes: 4192, num edges: 16832
+<gem.embedding.lap.LaplacianEigenmaps object at 0x7f6211939710>
+Laplacian matrix recon. error (low rank): 72.627992
+lap_eigmap_svd:
+    Training time: 1.209886
+    MAP: 0.12390971286036154      precision curve: [0.0, 0.0, 0.3333333333333333, 0.5, 0.6]
+
+
+
+----------------------------------------------------------------------------------------------------
+Num nodes: 4192, num edges: 16832
+<gem.embedding.lle.LocallyLinearEmbedding object at 0x7f6211939f60>
+Traceback (most recent call last):
+  File "./run_gem.py", line 49, in <module>
+    Y, t = embedding.learn_embedding(graph=G, edge_f=None, is_weighted=True, no_python=True)
+  File "/storage/hanlab/csexton/segGraph/3_embedding/gem/gem/embedding/lle.py", line 64, in learn_embedding
+    u, s, vt = lg.svds(I_min_A, k=self._d + 1, which='SM')
+  File "/home/csexton/.conda/envs/gem/lib/python3.6/site-packages/scipy/sparse/linalg/eigen/arpack/arpack.py", line 1867, in svds
+    ncv=ncv, which=which, v0=v0)
+  File "/home/csexton/.conda/envs/gem/lib/python3.6/site-packages/scipy/sparse/linalg/eigen/arpack/arpack.py", line 1687, in eigsh
+    params.iterate()
+  File "/home/csexton/.conda/envs/gem/lib/python3.6/site-packages/scipy/sparse/linalg/eigen/arpack/arpack.py", line 571, in iterate
+    self._raise_no_convergence()
+  File "/home/csexton/.conda/envs/gem/lib/python3.6/site-packages/scipy/sparse/linalg/eigen/arpack/arpack.py", line 377, in _raise_no_convergence
+    raise ArpackNoConvergence(msg % (num_iter, k_ok, self.k), ev, vec)
+scipy.sparse.linalg.eigen.arpack.arpack.ArpackNoConvergence: ARPACK error -1: No convergence (41921 iterations, 0/3 eigenvectors converged)
+
+real    14m57.141s
+user    33m27.259s
+sys    80m51.759s
+(gem
