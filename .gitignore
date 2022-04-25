@@ -1,3 +1,9 @@
 1_intersect_hic_chromhmm/intersect_loops_states1.bed
 1_intersect_hic_chromhmm/intersect_loops_states2.bed
 annotations/loops/
+.Rhistory
+3_embedding/deepwalk/.RData
+3_embedding/deepwalk/.Rhistory
+visualizations/.Rhistory
+visualizations/embeddings_viz/.RData
+visualizations/embeddings_viz/.Rhistory
